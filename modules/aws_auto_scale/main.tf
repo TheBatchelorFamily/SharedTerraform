@@ -33,7 +33,6 @@ resource "aws_launch_template" "aws_autoscale_templ" {
   lifecycle {
     create_before_destroy     = true
   }
-  monitoring                  = { enabled = "${var.enable-spot == "true" ? false : true}" } # Enable if enable-spot isn't true
   name                        = "web_server_scale"
   network_interfaces {
     associate_public_ip_address = false
