@@ -28,6 +28,9 @@ resource "aws_key_pair" "webserver" {
 
 resource "aws_launch_template" "aws_autoscale_templ" {
   image_id                    = data.aws_ami.amazon_linux_2.id
+  instance_market_options {
+    market_type = "spot"
+  }
   instance_type               = var.iType
   key_name                    = var.keyname
   lifecycle {
@@ -52,7 +55,7 @@ resource "aws_autoscaling_group" "mygroup" {
     launch_template {
       launch_template_specification {
         launch_template_id      = aws_launch_template.aws_autoscale_templ.id
-        version = aws_launch_template.aws_autoscale_templ.latest_version
+        version                 = aws_launch_template.aws_autoscale_templ.latest_version
       }
     }
   }
