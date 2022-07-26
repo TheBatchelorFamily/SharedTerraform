@@ -47,7 +47,7 @@ resource "aws_security_group" "webserver-sg" {
 
 #Imports the existing route53 zone name for DNS entry
 data "aws_route53_zone" "website" {
-  count = var.r53Enabled ? 1:0
+  count = var.r53Enabled ? 0:1
   name         = var.dnsName
   private_zone = false
 }
@@ -67,11 +67,11 @@ resource "aws_route53_record" "www" {
 }
 
 resource "aws_route53_record" "no_www" {
-  count = var.r53Enabled ? 1:0
+  count = var.r53Enabled ? 0:1
   depends_on = [ aws_eip.webserver ]
   name    = data.aws_route53_zone.website[*].name
   records = [ aws_eip.webserver.public_ip ]
   type    = "A"
   ttl     = "300"
-  zone_id = data.aws_route53_zone.website[*].zone_id
+  zone_id = data.aws_route53_zone.website.zone_id
 }
