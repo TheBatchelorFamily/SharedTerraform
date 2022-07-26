@@ -1,5 +1,11 @@
-provider "aws" {
-  region = var.region
+terraform{
+    required_providers {
+      aws = {
+        source  = "hashicorp/aws"
+        version = "~> 4.2"
+      }
+    }
+    required_version = "~> 1.2"
 }
 
 #This section grabs the latest ami image for Amazon Linux
@@ -12,43 +18,6 @@ data "aws_ami" "amazon_linux_2" {
     name   = "name"
     values = ["amzn2-ami-hvm-*-x86_64-ebs"]
   }
-}
-
-#This section creates the security group, and opens up ssh and http access.
-resource "aws_security_group" "webserver-sg" {
-  #ts:skip=AC_AWS_0228 port80OpenToInternet webserver
-  name = var.secgroupname
-  description = var.secgroupname
-  vpc_id = var.vpc
-
-  // To Allow SSH Transport
-  ingress {
-    from_port = 22
-    protocol = "tcp"
-    to_port = 22
-    cidr_blocks = var.sshIP
-  }
-
-  // To Allow Port 80 Transport
-  ingress {
-    from_port = 80
-    protocol = "tcp"
-    to_port = 80
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    from_port       = 0
-    to_port         = 0
-    protocol        = "-1"
-    cidr_blocks     = ["0.0.0.0/0"]
-  }
-
-  lifecycle {
-    create_before_destroy = true
-  }
-
-  tags = var.tags
 }
 
 resource "aws_key_pair" "webserver" {
@@ -69,7 +38,7 @@ resource "aws_spot_instance_request" "webserver" {
   vpc_security_group_ids = [
     aws_security_group.webserver-sg.id
   ]
-  
+
   root_block_device {
     delete_on_termination = true
     volume_size = 15
