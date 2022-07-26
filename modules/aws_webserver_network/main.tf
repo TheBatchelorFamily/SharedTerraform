@@ -73,5 +73,5 @@ resource "aws_route53_record" "no_www" {
   records = [ aws_eip.webserver.public_ip ]
   type    = "A"
   ttl     = "300"
-  zone_id = data.aws_route53_zone.website.zone_id
+  zone_id = data.aws_route53_zone.website[*].zone_id
 }
