@@ -57,7 +57,7 @@ resource "aws_eip" "webserver" {
 }
 
 resource "aws_route53_record" "www" {
-  count = var.r53Enabled ? 1:0
+  count = var.r53Enabled ? 0:1
   depends_on = [ aws_eip.webserver ]
   name    = "www.${data.aws_route53_zone.website.name}"
   records = [ aws_eip.webserver.public_ip ]
