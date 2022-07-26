@@ -51,7 +51,7 @@ resource "aws_autoscaling_group" "mygroup" {
   mixed_instances_policy {
     launch_template {
       launch_template_specification {
-        id      = aws_launch_template.aws_autoscale_templ.id
+        launch_template_id      = aws_launch_template.aws_autoscale_templ.id
         version = aws_launch_template.aws_autoscale_templ.latest_version
       }
     }
