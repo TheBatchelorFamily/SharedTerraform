@@ -49,16 +49,12 @@ resource "aws_launch_template" "aws_autoscale_templ" {
 
 resource "aws_autoscaling_group" "mygroup" {
   force_delete              = true
+  launch_template {
+    id      = aws_launch_template.aws_autoscale_templ.id
+    version                 = aws_launch_template.aws_autoscale_templ.latest_version
+  }
   max_size                  = 2
   min_size                  = 1
-  mixed_instances_policy {
-    launch_template {
-      launch_template_specification {
-        launch_template_id      = aws_launch_template.aws_autoscale_templ.id
-        version                 = aws_launch_template.aws_autoscale_templ.latest_version
-      }
-    }
-  }
   name                      = "WebServerASG"
   termination_policies      = ["OldestInstance"]
 }
