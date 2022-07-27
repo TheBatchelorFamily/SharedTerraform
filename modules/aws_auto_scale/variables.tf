@@ -3,15 +3,6 @@ variable iamRoleName {
     description = "Name for iam policy"
 }
 
-variable iamPolicyDesc {
-    default     = "Allows an ec2 instance to assign itself an elastic ip"
-    description = "Description of iam policy"
-}
-
-variable iamPolicyDef {
-    description = "json formatted iam"
-}
-
 variable iType {
     default     = "t2.micro"
     description = "ec2 instance size"
