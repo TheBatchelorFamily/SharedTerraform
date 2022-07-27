@@ -35,7 +35,7 @@ data "aws_iam_policy_document" "assign-eip" {
       "ec2:AssociateAddress"
     ]
     resources = [
-      "arn:aws:ec2:::*"
+      "arn:aws:ec2:*"
     ]
   }
 }
