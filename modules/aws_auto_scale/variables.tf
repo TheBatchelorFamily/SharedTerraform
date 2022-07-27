@@ -7,6 +7,11 @@ variable keyname {
     default = "webserver-key"
 }
 
+variable publicIP {
+    default     = false
+    description = "Determines if a public IP is assigned to the instances built from the auto scale template"
+}
+
 variable sshPub {
     default = ""
 }

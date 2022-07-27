@@ -38,7 +38,7 @@ resource "aws_launch_template" "aws_autoscale_templ" {
   }
   name                        = "web_server_scale"
   network_interfaces {
-    associate_public_ip_address = false
+    associate_public_ip_address = var.publicIP
     delete_on_termination       = true
     security_groups             = var.securityGroup
     subnet_id                   = var.subnet
