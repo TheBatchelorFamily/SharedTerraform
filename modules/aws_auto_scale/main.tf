@@ -23,10 +23,54 @@ data "aws_ami" "amazon_linux_2" {
 resource "aws_key_pair" "webserver" {
   key_name   = var.keyname
   public_key = var.sshPub
-  tags = var.tags
+  tags       = var.tags
+}
+
+data "aws_iam_policy_document" "assign-eip" {
+  statement {
+    actions = [
+      "ec2:DescribeAddresses",
+      "ec2:AllocateAddress",
+      "ec2:DescribeInstances",
+      "ec2:AssociateAddress"
+    ]
+    resources = [
+      "arn:aws:ec2:::*"
+    ]
+  }
+}
+
+data "aws_iam_policy_document" "assume-role" {
+  statement {
+    actions = [
+      "sts:AssumeRole"
+    ]
+    principals {
+      type        = "Service"
+      identifiers = ["ec2.amazonaws.com"]
+    }
+  }
+}
+
+resource "aws_iam_role" "role" {
+  assume_role_policy = data.aws_iam_policy_document.assume-role.json
+  inline_policy {
+    name = var.iamRoleName
+    policy = data.aws_iam_policy_document.assign-eip.json
+  }
+  name               = var.iamRoleName
+  tags               = var.tags
+}
+
+resource "aws_iam_instance_profile" "web_server_profile" {
+  name = var.iamRoleName
+  role = aws_iam_role.role.name
 }
 
 resource "aws_launch_template" "aws_autoscale_templ" {
+  iam_instance_profile {
+    name = aws_iam_instance_profile.web_server_profile.name
+  }
   image_id                    = data.aws_ami.amazon_linux_2.id
   instance_market_options {
     market_type = "spot"

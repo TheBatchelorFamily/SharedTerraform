@@ -1,5 +1,19 @@
+variable iamRoleName {
+    default     = "assign-eip"
+    description = "Name for iam policy"
+}
+
+variable iamPolicyDesc {
+    default     = "Allows an ec2 instance to assign itself an elastic ip"
+    description = "Description of iam policy"
+}
+
+variable iamPolicyDef {
+    description = "json formatted iam"
+}
+
 variable iType {
-    default = "t2.micro"
+    default     = "t2.micro"
     description = "ec2 instance size"
 }
 
@@ -24,11 +38,11 @@ variable securityGroup {
 }
 
 variable userData {
-    default = ""
+    default     = ""
     description = "Script for the ec2 instance to run at launch"
 }
 
 variable tags {
-    default = { Name = "Webserver" }
+    default     = { Name = "Webserver" }
     description = "Tags to apply to created resources"
 }
