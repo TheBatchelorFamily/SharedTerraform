@@ -59,19 +59,19 @@ resource "aws_eip" "webserver" {
 resource "aws_route53_record" "www" {
   count = var.r53Enabled ? 1:0
   depends_on = [ aws_eip.webserver ]
-  name    = flatten("www.${data.aws_route53_zone.website[*].name}")
+  name    = flatten("www.${data.aws_route53_zone.website.*.name}")
   records = [ aws_eip.webserver.public_ip ]
   type    = "A"
   ttl     = "300"
-  zone_id = flatten(data.aws_route53_zone.website[*].zone_id)
+  zone_id = flatten(data.aws_route53_zone.website.*.zone_id)
 }
 
 resource "aws_route53_record" "no_www" {
   count = var.r53Enabled ? 1:0
   depends_on = [ aws_eip.webserver ]
-  name    = flatten(data.aws_route53_zone.website[*].name)
+  name    = flatten(data.aws_route53_zone.website.*.name)
   records = [ aws_eip.webserver.public_ip ]
   type    = "A"
   ttl     = "300"
-  zone_id = flatten(data.aws_route53_zone.website[*].zone_id)
+  zone_id = flatten(data.aws_route53_zone.website.*.zone_id)
 }
