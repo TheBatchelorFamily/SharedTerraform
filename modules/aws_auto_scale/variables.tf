@@ -10,6 +10,7 @@ variable iType {
 
 variable keyname {
     default = "webserver-key"
+    description = "The name of the ssh key to create"
 }
 
 variable publicIP {
@@ -19,13 +20,16 @@ variable publicIP {
 
 variable sshPub {
     default = ""
+    description = "The public key value for the ssh key being created"
 }
 
 variable subnet {
     default = "subnet-0beea67bf6470d712"
+    description = "The subnet id of the existing subnet to use"
 }
 
 variable securityGroup {
+    description = "The security group ID of the existing security group to assign"
 }
 
 variable userData {
