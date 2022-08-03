@@ -4,7 +4,7 @@ A space for shared terraform modules
 ## Modules
 
 * General Usage
-  ```
+  ```json
   module "module_name" {
   source       = "github.com/TheBatchelorFamily/SharedTerraform.git//modules/module_name?ref=1.0.0"
   moduleVar1   = var.localVar1
