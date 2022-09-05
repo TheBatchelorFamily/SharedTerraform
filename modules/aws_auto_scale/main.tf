@@ -101,4 +101,5 @@ resource "aws_autoscaling_group" "mygroup" {
   min_size                  = 1
   name                      = "WebServerASG"
   termination_policies      = ["OldestInstance"]
+  update_default_version    = true
 }
