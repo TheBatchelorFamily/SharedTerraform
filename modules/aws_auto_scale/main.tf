@@ -89,6 +89,7 @@ resource "aws_launch_template" "aws_autoscale_templ" {
   }
   tags                        = var.tags
   user_data                   = var.userData
+  update_default_version      = true
 }
 
 resource "aws_autoscaling_group" "mygroup" {
