@@ -94,9 +94,12 @@ resource "aws_launch_template" "aws_autoscale_templ" {
 
 resource "aws_autoscaling_group" "mygroup" {
   force_delete              = true
+  instance_refresh {
+    strategy = "Rolling"
+  }
   launch_template {
     id      = aws_launch_template.aws_autoscale_templ.id
-    version                 = aws_launch_template.aws_autoscale_templ.latest_version
+    version = aws_launch_template.aws_autoscale_templ.latest_version
   }
   max_size                  = 2
   min_size                  = 1
