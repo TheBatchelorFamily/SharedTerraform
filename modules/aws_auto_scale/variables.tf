@@ -4,7 +4,7 @@ variable iamRoleName {
 }
 
 variable iType {
-    default     = "t2.micro"
+    default     = "t3.micro"
     description = "ec2 instance size"
 }
 

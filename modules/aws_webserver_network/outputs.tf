@@ -12,3 +12,8 @@ output "aws_security_group_id" {
     description = "The ID value for the created security group"
     value = aws_security_group.webserver-sg.id
 }
+
+output "cloudfront_domain_name" {
+    value = aws_cloudfront_distribution.website.domain_name
+    description = "The domain name of the CloudFront distribution"
+}

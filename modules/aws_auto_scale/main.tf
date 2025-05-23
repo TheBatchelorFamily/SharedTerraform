@@ -101,7 +101,7 @@ resource "aws_autoscaling_group" "mygroup" {
     id      = aws_launch_template.aws_autoscale_templ.id
     version = aws_launch_template.aws_autoscale_templ.latest_version
   }
-  max_size                  = 2
+  max_size                  = 1
   min_size                  = 1
   name                      = "WebServerASG"
   termination_policies      = ["OldestInstance"]
