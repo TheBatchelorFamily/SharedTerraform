@@ -36,3 +36,9 @@ variable "tags" {
   default     = { Name = "Webserver" }
   description = "Tags to apply to created resources"
 }
+
+variable "alert_email" {
+  description = "Email address to receive CloudWatch alerts"
+  type        = string
+  default     = "christsreturn01@gmail.com"
+}
