@@ -1,19 +1,24 @@
 output "aws_eip" {
-    description = "The ID value for the created elastic IP"
-    value = aws_eip.webserver.public_ip
+  description = "The ID value for the created elastic IP"
+  value       = aws_eip.webserver.public_ip
 }
 
 output "aws_eip_alloID" {
-    description = "The elastic allocation ID"
-    value = aws_eip.webserver.allocation_id
+  description = "The elastic allocation ID"
+  value       = aws_eip.webserver.allocation_id
 }
 
 output "aws_security_group_id" {
-    description = "The ID value for the created security group"
-    value = aws_security_group.webserver-sg.id
+  description = "The ID value for the created security group"
+  value       = aws_security_group.webserver-sg.id
+}
+
+output "subnet_ids" {
+  description = "List of subnet IDs across multiple AZs for autoscaling"
+  value       = aws_subnet.webserver[*].id
 }
 
 output "cloudfront_domain_name" {
-    value = aws_cloudfront_distribution.website.domain_name
-    description = "The domain name of the CloudFront distribution"
+  value       = aws_cloudfront_distribution.website.domain_name
+  description = "The domain name of the CloudFront distribution"
 }
