@@ -21,10 +21,10 @@ resource "aws_cloudwatch_metric_alarm" "instance_status_check" {
   evaluation_periods  = 3
   metric_name         = "StatusCheckFailed"
   namespace           = "AWS/EC2"
-  period              = 600
+  period              = 1800
   statistic           = "Maximum"
   threshold           = 1
-  alarm_description   = "Alert when EC2 instance fails status checks for 15+ minutes"
+  alarm_description   = "Alert when EC2 instance fails status checks for 30+ minutes"
   alarm_actions       = [aws_sns_topic.webserver_alerts[0].arn]
   treat_missing_data  = "notBreaching"
 
