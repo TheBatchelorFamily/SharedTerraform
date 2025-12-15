@@ -10,6 +10,19 @@ data "aws_ami" "amazon_linux_2" {
   }
 }
 
+# Get the security group to determine the VPC
+data "aws_security_group" "webserver" {
+  id = var.securityGroup[0]
+}
+
+# Get all subnets in the VPC for multi-AZ deployment
+data "aws_subnets" "webserver" {
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_security_group.webserver.vpc_id]
+  }
+}
+
 resource "aws_key_pair" "webserver" {
   key_name   = var.keyname
   public_key = var.sshPub
@@ -53,5 +66,5 @@ resource "aws_autoscaling_group" "mygroup" {
   min_size             = 1
   name                 = "WebServerASG"
   termination_policies = ["OldestInstance"]
-  vpc_zone_identifier  = var.subnets
+  vpc_zone_identifier  = data.aws_subnets.webserver.ids
 }

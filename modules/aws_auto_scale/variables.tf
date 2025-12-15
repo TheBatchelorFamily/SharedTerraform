@@ -23,12 +23,6 @@ variable "sshPub" {
   description = "The public key value for the ssh key being created"
 }
 
-variable "subnets" {
-  default     = ["subnet-0beea67bf6470d712"]
-  description = "List of subnet IDs for multi-AZ deployment"
-  type        = list(string)
-}
-
 variable "securityGroup" {
   description = "The security group ID of the existing security group to assign"
 }

@@ -13,11 +13,6 @@ output "aws_security_group_id" {
   value       = aws_security_group.webserver-sg.id
 }
 
-output "subnet_ids" {
-  description = "List of subnet IDs across multiple AZs for autoscaling"
-  value       = aws_subnet.webserver[*].id
-}
-
 output "cloudfront_domain_name" {
   value       = aws_cloudfront_distribution.website.domain_name
   description = "The domain name of the CloudFront distribution"
