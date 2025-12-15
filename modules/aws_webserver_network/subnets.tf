@@ -20,9 +20,3 @@ resource "aws_subnet" "webserver" {
     }
   )
 }
-
-# Output all subnet IDs for use by autoscaling group
-output "subnet_ids" {
-  description = "List of subnet IDs across multiple AZs"
-  value       = aws_subnet.webserver[*].id
-}
