@@ -1,7 +1,6 @@
 # Get available AZs in the region
 data "aws_availability_zones" "available" {
-  state  = "available"
-  region = var.region
+  state = "available"
 }
 
 # Create subnets in multiple AZs for high availability and capacity flexibility
