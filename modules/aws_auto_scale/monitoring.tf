@@ -1,8 +1,9 @@
 # SNS Topic for alerts
 resource "aws_sns_topic" "webserver_alerts" {
-  count = var.alert_email != "" ? 1 : 0
-  name  = "webserver-alerts"
-  tags  = var.tags
+  count             = var.alert_email != "" ? 1 : 0
+  name              = "webserver-alerts"
+  kms_master_key_id = "alias/aws/sns" # This uses the FREE default AWS key
+  tags              = var.tags
 }
 
 # Email subscription to SNS topic

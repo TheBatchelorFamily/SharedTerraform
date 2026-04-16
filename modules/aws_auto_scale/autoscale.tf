@@ -51,6 +51,11 @@ resource "aws_launch_template" "aws_autoscale_templ" {
   tags                   = var.tags
   user_data              = var.userData
   update_default_version = true
+
+  metadata_options {
+    http_tokens                 = "required"
+    http_put_response_hop_limit = 1
+  }
 }
 
 resource "aws_autoscaling_group" "mygroup" {
