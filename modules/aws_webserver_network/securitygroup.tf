@@ -1,8 +1,10 @@
 #This section creates the security group, and opens up ssh and http access.
 
-# checkov:skip=CKV2_AWS_5:Security group is attached at the root module level
 resource "aws_security_group" "webserver-sg" {
   #ts:skip=AC_AWS_0228 port80OpenToInternet webserver
+  # checkov:skip=CKV2_AWS_5:Security group is attached at the root module level
+  # checkov:skip=CKV_AWS_382 CKV_AWS_260: This is a web server
+
   name        = var.secgroupname
   description = var.secgroupname
   vpc_id      = var.vpc
