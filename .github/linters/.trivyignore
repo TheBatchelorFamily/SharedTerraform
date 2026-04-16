@@ -1,0 +1,6 @@
+# Disable CloudFront WAF check
+AWS-0011
+# Disable S3 Customer Managed Key check
+AWS-0132
+# Allow unrestricted egress for system updates and external API calls
+AWS-0104

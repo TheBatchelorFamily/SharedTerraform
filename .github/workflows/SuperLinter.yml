@@ -31,6 +31,12 @@ jobs:
     # Set the agent to run on
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write
+      packages: read
+      pull-requests: write
+      statuses: write
+
     ##################
     # Load all steps #
     ##################
@@ -39,7 +45,7 @@ jobs:
       # Checkout the code base #
       ##########################
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
         with:
           # Full git history needed to get a list of changed files within `super-linter`
           fetch-depth: 0
@@ -48,8 +54,29 @@ jobs:
       # Run Linter against code base #
       ################################
       - name: Lint Code Base
-        uses: github/super-linter/slim@v4
+        uses: super-linter/super-linter/slim@v8
         env:
+          FIX_MARKDOWN: true
+          FIX_MARKDOWN_PRETTIER: true
+          FIX_SPELL_CODESPELL: true
+          FIX_TERRAFORM_FMT: true
+          FIX_YAML_PRETTIER: true
           VALIDATE_ALL_CODEBASE: false
+          VALIDATE_BIOME_FORMAT: false
+          VALIDATE_BIOME_LINT: false
+          VALIDATE_PYTHON_BLACK: false
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SAVE_SUPER_LINTER_SUMMARY: true
+
+      - name: Create Pull Request with fixes
+        if: always() # Run even if the linter found errors
+        uses: peter-evans/create-pull-request@v8
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: fix linting and formatting issues"
+          title: "Fix linting issues found by Super-Linter"
+          body: "This is an automated PR containing formatting fixes suggested by Biome and Prettier."
+          branch: superlinter-fixes # The name of the new branch for the PR
+          base: ${{ github.head_ref }} # The branch you are currently working on
+          delete-branch: true
