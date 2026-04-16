@@ -20,6 +20,7 @@ resource "aws_security_group" "webserver-sg" {
 
   // To Allow Port 80 Transport
   ingress {
+    # checkov:skip=CKV_AWS_382 CKV_AWS_260: This is a web server
     description = "Allow HTTP from anywhere"
     from_port   = 80
     protocol    = "tcp"

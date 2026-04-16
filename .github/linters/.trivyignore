@@ -4,3 +4,11 @@ AWS-0011
 AWS-0132
 # Allow unrestricted egress for system updates and external API calls
 AWS-0104
+# Not using Access logging for portfolio site
+AWS-0010
+
+# Not using WAF for portfolio site
+AWS-0011
+
+# Not using customer managed keys for S3 buckets in portfolio site
+AWS-0136

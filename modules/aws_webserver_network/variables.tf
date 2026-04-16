@@ -10,12 +10,6 @@ variable "r53Enabled" {
   description = "Enables or disables route53 components so that this module can be run without modifying dns"
 }
 
-variable "region" {
-  type        = string
-  default     = "us-east-1"
-  description = "The aws region to deploy to"
-}
-
 variable "secgroupname" {
   type        = string
   default     = "Webserver-Sec-Group"
