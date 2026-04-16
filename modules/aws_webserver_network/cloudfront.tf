@@ -58,8 +58,9 @@ resource "aws_cloudfront_distribution" "website" {
 
 # ACM certificate for CloudFront (must be in us-east-1)
 resource "aws_acm_certificate" "cloudfront" {
-  provider          = aws.us_east_1
   domain_name       = var.dnsName
+  provider          = aws.us_east_1
+  tags              = var.tags
   validation_method = "DNS"
 
   subject_alternative_names = [
@@ -67,7 +68,10 @@ resource "aws_acm_certificate" "cloudfront" {
     var.dnsName
   ]
 
-  tags = var.tags
+  lifecycle {
+    create_before_destroy = true
+  }
+
 }
 
 resource "aws_route53_record" "acm_validation" {

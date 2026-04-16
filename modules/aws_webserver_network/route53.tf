@@ -5,6 +5,7 @@ data "aws_route53_zone" "website" {
   private_zone = false
 }
 
+# checkov:skip=CKV2_AWS_19: EIP is associated by user_data
 resource "aws_eip" "webserver" {
   tags = var.tags
 }
