@@ -12,5 +12,6 @@ skip-check:
   - CKV_AWS_144 # "Ensure that S3 bucket has cross-region replication enabled"
   - CKV_AWS_145 # "Ensure that S3 buckets are encrypted with KMS by default"
   - CKV_AWS_310 # "Portfolio site does not require multi-region failover"
+  - CKV2_GHA_1 # "Workflows need write to create PRs"
   # Don't report passed checks in output
 quiet: true
