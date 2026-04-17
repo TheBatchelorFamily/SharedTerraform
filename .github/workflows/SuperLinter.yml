@@ -4,6 +4,7 @@
 ## Super Linter GitHub Actions ##
 #################################
 #################################
+# checkov:skip=CKV2_GHA_1: Write permissions are required for the create-pull-request action
 name: Lint Code Base
 
 #
@@ -25,7 +26,6 @@ on:
 # Set the Job #
 ###############
 jobs:
-  # checkov:skip=CKV2_GHA_1: Write permissions are required for the create-pull-request action
   build:
     # Name the Job
     name: Lint Code Base
