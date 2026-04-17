@@ -6,9 +6,7 @@ AWS-0132
 AWS-0104
 # Not using Access logging for portfolio site
 AWS-0010
-
 # Not using WAF for portfolio site
 AWS-0011
-
 # Not using customer managed keys for S3 buckets in portfolio site
 AWS-0136
