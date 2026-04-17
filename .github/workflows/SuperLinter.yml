@@ -25,13 +25,13 @@ on:
 # Set the Job #
 ###############
 jobs:
+  # checkov:skip=CKV2_GHA_1: Write permissions are required for the create-pull-request action
   build:
     # Name the Job
     name: Lint Code Base
     # Set the agent to run on
     runs-on: ubuntu-latest
 
-  # checkov:skip=CKV2_GHA_1: This workflow needs write permissions to create a PR with fixes
     permissions:
       contents: write
       packages: read
