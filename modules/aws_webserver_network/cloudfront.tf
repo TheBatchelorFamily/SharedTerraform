@@ -1,6 +1,10 @@
+locals {
+  cloudfront_origin_domain = var.cloudfront_origin_domain_name != "" ? var.cloudfront_origin_domain_name : try(aws_eip.webserver[0].public_dns, "")
+}
+
 resource "aws_cloudfront_distribution" "website" {
   origin {
-    domain_name = aws_eip.webserver.public_dns
+    domain_name = local.cloudfront_origin_domain
     origin_id   = "webserver-origin"
     custom_origin_config {
       http_port              = 80

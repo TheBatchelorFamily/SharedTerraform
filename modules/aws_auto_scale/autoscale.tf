@@ -52,6 +52,7 @@ resource "aws_launch_template" "aws_autoscale_templ" {
 
   network_interfaces {
     associate_public_ip_address = var.publicIP
+    ipv6_address_count          = 1
     delete_on_termination       = true
     security_groups             = var.securityGroup
   }

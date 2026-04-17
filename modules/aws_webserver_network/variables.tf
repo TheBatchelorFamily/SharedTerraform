@@ -33,3 +33,19 @@ variable "vpc" {
   default     = "vpc-00a0663f397146f3d"
   description = "An existing VPC ID."
 }
+
+variable "create_eip" {
+  type        = bool
+  default     = true
+  description = "Create an IPv4 Elastic IP for the webserver. Disable this when using an IPv6-only origin."
+}
+
+variable "cloudfront_origin_domain_name" {
+  type        = string
+  default     = ""
+  description = "Custom origin domain name for CloudFront. If empty, the module uses the EIP public DNS name."
+  validation {
+    condition     = var.create_eip || var.cloudfront_origin_domain_name != ""
+    error_message = "Either create_eip must be true or cloudfront_origin_domain_name must be set when creating the CloudFront distribution."
+  }
+}

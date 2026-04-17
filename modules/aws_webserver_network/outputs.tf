@@ -1,11 +1,11 @@
 output "aws_eip" {
   description = "The ID value for the created elastic IP"
-  value       = aws_eip.webserver.public_ip
+  value       = try(aws_eip.webserver[0].public_ip, "")
 }
 
 output "aws_eip_alloID" {
   description = "The elastic allocation ID"
-  value       = aws_eip.webserver.allocation_id
+  value       = try(aws_eip.webserver[0].allocation_id, "")
 }
 
 output "aws_security_group_id" {

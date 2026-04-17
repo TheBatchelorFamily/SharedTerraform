@@ -6,6 +6,7 @@ data "aws_route53_zone" "website" {
 }
 
 resource "aws_eip" "webserver" {
+  count = var.create_eip ? 1 : 0
   # checkov:skip=CKV2_AWS_19: EIP is associated by user_data
   tags = var.tags
 }
@@ -24,10 +25,34 @@ resource "aws_route53_record" "www" {
   zone_id = data.aws_route53_zone.website[0].zone_id
 }
 
+resource "aws_route53_record" "www_ipv6" {
+  count = var.r53Enabled ? 1 : 0
+  name  = "www.${data.aws_route53_zone.website[0].name}"
+  type  = "AAAA"
+  alias {
+    name                   = aws_cloudfront_distribution.website.domain_name
+    zone_id                = aws_cloudfront_distribution.website.hosted_zone_id
+    evaluate_target_health = false
+  }
+  zone_id = data.aws_route53_zone.website[0].zone_id
+}
+
 resource "aws_route53_record" "no_www" {
   count = var.r53Enabled ? 1 : 0
   name  = data.aws_route53_zone.website[0].name
   type  = "A"
+  alias {
+    name                   = aws_cloudfront_distribution.website.domain_name
+    zone_id                = aws_cloudfront_distribution.website.hosted_zone_id
+    evaluate_target_health = false
+  }
+  zone_id = data.aws_route53_zone.website[0].zone_id
+}
+
+resource "aws_route53_record" "no_www_ipv6" {
+  count = var.r53Enabled ? 1 : 0
+  name  = data.aws_route53_zone.website[0].name
+  type  = "AAAA"
   alias {
     name                   = aws_cloudfront_distribution.website.domain_name
     zone_id                = aws_cloudfront_distribution.website.hosted_zone_id
