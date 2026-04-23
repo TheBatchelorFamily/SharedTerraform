@@ -7,7 +7,7 @@ data "aws_ami" "amazon_linux_2023" {
   filter {
     name = "name"
     # Added "kernel-6.1" (or similar) or "hvm" to narrow it down correctly
-    values = ["al2023-ami-kernel-*-x86_64"]
+    values = ["al2023-ami-*-x86_64"]
   }
 
   filter {
@@ -15,10 +15,6 @@ data "aws_ami" "amazon_linux_2023" {
     values = ["x86_64"]
   }
 
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
 }
 
 # Get the security group to determine the VPC
