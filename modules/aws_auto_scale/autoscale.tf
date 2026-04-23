@@ -1,12 +1,12 @@
-#This section grabs the latest ami image for Amazon Linux
+#This section grabs the latest ami image for Amazon Linux 2023
 #Keeps patches current at each deployment.
-data "aws_ami" "amazon_linux_2" {
+data "aws_ami" "amazon_linux_2023" {
   most_recent = true
   owners      = ["amazon"]
 
   filter {
     name   = "name"
-    values = ["amzn2-ami-hvm-*-x86_64-ebs"]
+    values = ["al2023-ami-hvm-*-x86_64-ebs"]
   }
 }
 
@@ -30,7 +30,7 @@ resource "aws_key_pair" "webserver" {
 }
 
 resource "aws_launch_template" "aws_autoscale_templ" {
-  image_id               = data.aws_ami.amazon_linux_2.id
+  image_id               = data.aws_ami.amazon_linux_2023.id
   instance_type          = var.iType
   key_name               = var.keyname
   name                   = "web_server_scale"
