@@ -1,17 +1,7 @@
 #This section grabs the latest ami image for Amazon Linux 2023
 #Keeps patches current at each deployment.
 data "aws_ssm_parameter" "amazon_linux_2023" {
-  name = "/aws/service/ami-amazon-linux-latest/al2023-x86_64-hvm"
-}
-
-data "aws_ami" "amazon_linux_2023" {
-  most_recent = true
-  owners      = ["amazon"]
-
-  filter {
-    name   = "image-id"
-    values = [data.aws_ssm_parameter.amazon_linux_2023.value]
-  }
+  name = "/aws/service/ami-amazon-linux-latest/al2023-ami-hvm-x86_64"
 }
 
 # Get the security group to determine the VPC
