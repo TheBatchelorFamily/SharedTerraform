@@ -1,7 +1,24 @@
 #This section grabs the latest ami image for Amazon Linux 2023
 #Keeps patches current at each deployment.
-data "aws_ssm_parameter" "amazon_linux_2023" {
-  name = "/aws/service/ami-amazon-linux-latest/al2023-ami-hvm-x86_64"
+data "aws_ami" "amazon_linux_2023" {
+  most_recent = true
+  owners      = ["amazon"]
+
+  filter {
+    name = "name"
+    # Added "kernel-6.1" (or similar) or "hvm" to narrow it down correctly
+    values = ["al2023-ami-kernel-*-x86_64"]
+  }
+
+  filter {
+    name   = "architecture"
+    values = ["x86_64"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
 }
 
 # Get the security group to determine the VPC
@@ -24,7 +41,7 @@ resource "aws_key_pair" "webserver" {
 }
 
 resource "aws_launch_template" "aws_autoscale_templ" {
-  image_id               = data.aws_ssm_parameter.amazon_linux_2023.value
+  image_id               = data.aws_ami.amazon_linux_2023.id
   instance_type          = var.iType
   key_name               = var.keyname
   name                   = "web_server_scale"
