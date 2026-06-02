@@ -45,6 +45,17 @@ resource "aws_launch_template" "aws_autoscale_templ" {
   user_data              = var.userData
   update_default_version = true
 
+# Explicitly override the default 30 GiB AMI size
+  block_device_mappings {
+    device_name = "/dev/xvda" # Root device name for AL2023
+
+    ebs {
+      volume_size           = 10 # Set your desired size in GiB
+      volume_type           = "gp3"
+      delete_on_termination = true
+    }
+  }
+
   iam_instance_profile {
     name = aws_iam_instance_profile.web_server_profile.name
   }
