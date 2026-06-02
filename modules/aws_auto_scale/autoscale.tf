@@ -7,7 +7,7 @@ data "aws_ami" "amazon_linux_2023" {
   filter {
     name = "name"
     # Added "kernel-6.1" (or similar) or "hvm" to narrow it down correctly
-    values = ["al2023-ami-*-x86_64"]
+    values = ["al2023-ami-minimal-*-x86_64"]
   }
 
   filter {
@@ -100,6 +100,12 @@ resource "aws_autoscaling_group" "mygroup" {
 
   instance_refresh {
     strategy = "Rolling"
+    preferences {
+      # This allows the ASG to scale up to 2 instances temporarily 
+      # during a deployment, even though max_size is set to 1.
+      max_healthy_percentage = 200 
+      min_healthy_percentage = 100
+    }
   }
 
   launch_template {
