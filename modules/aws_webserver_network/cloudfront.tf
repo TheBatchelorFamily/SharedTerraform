@@ -19,22 +19,19 @@ resource "aws_cloudfront_distribution" "website" {
     var.dnsName
   ]
 
-  default_cache_behavior {
+default_cache_behavior {
     allowed_methods  = ["GET", "HEAD"]
     cached_methods   = ["GET", "HEAD"]
     target_origin_id = "webserver-origin"
 
-    forwarded_values {
-      query_string = false
-      cookies {
-        forward = "none"
-      }
-    }
+    # 1. Use the AWS Managed CachingOptimized Policy (Handles TTLs, Query Strings, and Cookies)
+    cache_policy_id = "658327ea-f89d-4fab-a63d-7e88639e58f6"
+
+    # 2. Use the AWS Managed AllViewerExceptHostHeader Origin Request Policy 
+    # (Ensures the real origin receives proper HTTP headers behind CloudFront)
+    origin_request_policy_id = "b689b0a8-53d0-40ab-baf2-68002d296276"
 
     viewer_protocol_policy = "redirect-to-https"
-    min_ttl                = 0
-    default_ttl            = 3600
-    max_ttl                = 86400
   }
 
   price_class = "PriceClass_100"
