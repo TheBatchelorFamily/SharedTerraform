@@ -4,10 +4,10 @@ variable "iamRoleName" {
   description = "Name for iam policy"
 }
 
-variable "iType" {
-  type        = string
-  default     = "t3.micro"
-  description = "ec2 instance size"
+variable "instance_types" {
+  type        = list(string)
+  default     = ["t3a.micro", "t3.micro"]
+  description = "Spot instance types for mixed instances policy"
 }
 
 variable "keyname" {

@@ -38,14 +38,14 @@ resource "aws_key_pair" "webserver" {
 
 resource "aws_launch_template" "aws_autoscale_templ" {
   image_id               = data.aws_ami.amazon_linux_2023.id
-  instance_type          = var.iType
+  instance_type          = var.instance_types[0]
   key_name               = var.keyname
   name                   = "web_server_scale"
   tags                   = var.tags
   user_data              = var.userData
   update_default_version = true
 
-# Explicitly override the default 30 GiB AMI size
+  # Explicitly override the default 30 GiB AMI size
   block_device_mappings {
     device_name = "/dev/xvda" # Root device name for AL2023
 
@@ -103,13 +103,31 @@ resource "aws_autoscaling_group" "mygroup" {
     preferences {
       # This allows the ASG to scale up to 2 instances temporarily 
       # during a deployment, even though max_size is set to 1.
-      max_healthy_percentage = 200 
+      max_healthy_percentage = 200
       min_healthy_percentage = 100
     }
   }
 
-  launch_template {
-    id      = aws_launch_template.aws_autoscale_templ.id
-    version = aws_launch_template.aws_autoscale_templ.latest_version
+  mixed_instances_policy {
+    launch_template {
+      launch_template_specification {
+        launch_template_id = aws_launch_template.aws_autoscale_templ.id
+        version            = aws_launch_template.aws_autoscale_templ.latest_version
+      }
+
+      dynamic "override" {
+        for_each = var.instance_types
+        content {
+          instance_type = override.value
+        }
+      }
+    }
+
+    instances_distribution {
+      on_demand_base_capacity                  = 0
+      on_demand_percentage_above_base_capacity = 0
+      spot_allocation_strategy                 = "lowest-price"
+      spot_instance_pools                      = min(length(var.instance_types), 2)
+    }
   }
 }
