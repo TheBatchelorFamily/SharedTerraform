@@ -29,7 +29,7 @@ default_cache_behavior {
 
     # Use the AWS Managed UserAgentRefererHeaders Origin Request Policy
     # Compatible across all CloudFront distribution tiers
-    origin_request_policy_id = "ac70b791-582c-4a42-bb10-ad361685f747"
+    # origin_request_policy_id = "ac70b791-582c-4a42-bb10-ad361685f747"
 
     viewer_protocol_policy = "redirect-to-https"
   }
