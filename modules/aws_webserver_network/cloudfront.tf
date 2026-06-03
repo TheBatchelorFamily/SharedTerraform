@@ -51,6 +51,12 @@ default_cache_behavior {
   }
 
   tags = var.tags
+
+  lifecycle {
+    ignore_changes = [
+      web_acl_id,
+      price_class
+    ]
 }
 
 # ACM certificate for CloudFront (must be in us-east-1)
