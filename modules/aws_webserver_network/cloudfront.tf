@@ -27,9 +27,9 @@ default_cache_behavior {
     # 1. Use the AWS Managed CachingOptimized Policy (Handles TTLs, Query Strings, and Cookies)
     cache_policy_id = "658327ea-f89d-4fab-a63d-7e88639e58f6"
 
-    # 2. Use the AWS Managed AllViewerExceptHostHeader Origin Request Policy 
-    # (Ensures the real origin receives proper HTTP headers behind CloudFront)
-    origin_request_policy_id = "b689b0a8-53d0-40ab-baf2-68002d296276"
+    # Use the AWS Managed UserAgentRefererHeaders Origin Request Policy
+    # Compatible across all CloudFront distribution tiers
+    origin_request_policy_id = "ac70b791-582c-4a42-bb10-ad361685f747"
 
     viewer_protocol_policy = "redirect-to-https"
   }
