@@ -57,6 +57,7 @@ default_cache_behavior {
       web_acl_id,
       price_class
     ]
+  }
 }
 
 # ACM certificate for CloudFront (must be in us-east-1)
