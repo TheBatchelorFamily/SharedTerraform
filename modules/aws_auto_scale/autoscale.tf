@@ -60,9 +60,10 @@ resource "aws_launch_template" "aws_autoscale_templ" {
     name = aws_iam_instance_profile.web_server_profile.name
   }
 
-  instance_market_options {
-    market_type = "spot"
-  }
+# No longer needed mixed instances policy
+#  instance_market_options {
+#    market_type = "spot"
+#  }
 
   lifecycle {
     create_before_destroy = true
